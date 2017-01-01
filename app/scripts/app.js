@@ -72,11 +72,13 @@ Instructions:
      */
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
-      /*
+      var sequence = Promise.resolve();
+
       response.results.forEach(function(url) { 
-        getJSON(url).then(createPlanetThumb);
-      });*/
-      processPlanet(response.results, 0);
+        sequence = sequence.then(function() {
+        	return getJSON(url);
+        }).then(createPlanetThumb);
+      });
     });
   });
 })(document);
