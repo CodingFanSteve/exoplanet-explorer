@@ -57,6 +57,14 @@ Instructions:
     });
   }
 
+  function processPlanet(planets, i) {
+  	if (i < planets.length) {
+  		getJSON(planets[i]).then(createPlanetThumb).then(function() {
+  			processPlanet(planets, i + 1);
+  		});
+  	}
+  }
+
   window.addEventListener('WebComponentsReady', function() {
     home = document.querySelector('section[data-route="home"]');
     /*
@@ -64,9 +72,11 @@ Instructions:
      */
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
-      response.results.forEach(function(url) {
+      /*
+      response.results.forEach(function(url) { 
         getJSON(url).then(createPlanetThumb);
-      });
+      });*/
+      processPlanet(response.results, 0);
     });
   });
 })(document);
